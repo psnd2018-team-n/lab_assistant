@@ -10,8 +10,6 @@ RUN apk add --no-cache npm
 ADD package.json $APP_ROOT
 ADD package-lock.json $APP_ROOT
 
-RUN npm install -f fsevents
-
 RUN npm install
 
 ADD public $APP_ROOT

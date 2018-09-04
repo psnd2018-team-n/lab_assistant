@@ -5,8 +5,9 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'mysql',
   port     : 3306,
-  user     : 'express',
-  database : 'plise_api'
+  user     : 'lab_assistant',
+  passwod  : 'password',
+  database : 'lab_assistant'
 });
 
 /* GET home page. */

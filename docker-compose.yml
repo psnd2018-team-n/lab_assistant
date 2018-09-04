@@ -11,6 +11,11 @@ services:
       - bridge_network
     ports:
       - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: lab_assistant
+      MYSQL_USER:: lab_assistant
+      MYSQL_PASSWORD: password
     logging:
       driver: "json-file"
       options:
@@ -34,7 +39,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-  express:
+  lab_assistant_api:
     build: ${PWD}/lab_assistant_api
     image: naoto24kawa/lab_assistant_api:0.1
     container_name: lab_assistant_api
@@ -53,7 +58,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-  react:
+  lab_assistant:
     build: ${PWD}/lab_assistant
     image: naoto24kawa/lab_assistant:0.1
     container_name: lab_assistant
