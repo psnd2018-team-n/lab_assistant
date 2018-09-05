@@ -3,9 +3,9 @@ var router = express.Router();
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'mysql',
+  host     : 'mariadb',
   port     : 3306,
-  user     : 'lab_assistant',
+  user     : 'root',
   passwod  : 'password',
   database : 'lab_assistant'
 });

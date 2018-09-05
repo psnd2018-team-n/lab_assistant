@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  mysql:
-    image: mysql
-    container_name: mysql
+  mariadb:
+    image: mariadb
+    container_name: mariadb
     restart: always
     volumes:
-      - ${PWD}/mysql:/var/lib/mysql
+      - ${PWD}/mariadb:/var/lib/mysql
     networks:
       - bridge_network
     ports:
@@ -14,8 +14,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: lab_assistant
-      MYSQL_USER:: lab_assistant
-      MYSQL_PASSWORD: password
     logging:
       driver: "json-file"
       options:
@@ -45,13 +43,13 @@ services:
     container_name: lab_assistant_api
     restart: always
     volumes:
-      - ${PWD}/lab_assistant_api:/usr/src/plise_api
+      - ${PWD}/lab_assistant_api:/lab_assistant_api
     ports:
       - "13000:3000"
     networks:
       - bridge_network
     depends_on:
-      - mysql
+      - mariadb
       - mongo
     logging:
       driver: "json-file"
@@ -70,7 +68,7 @@ services:
     networks:
       - bridge_network
     depends_on:
-      - mysql
+      - mariadb
       - mongo
     logging:
       driver: "json-file"

@@ -1,5 +1,5 @@
 {
-  "name": "plise_api",
+  "name": "lab_assistant_api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -17,7 +17,6 @@
     "jade": "~1.11.0",
     "mongoose": "^5.2.9",
     "morgan": "~1.9.0",
-    "mysql": "^2.16.0",
-    "watchify": "^3.11.0"
+    "mysql": "^2.16.0"
   }
 }
