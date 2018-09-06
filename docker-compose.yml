@@ -14,6 +14,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: lab_assistant
+    tty: true
     logging:
       driver: "json-file"
       options:
@@ -32,6 +33,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
+    tty: true
     logging:
       driver: "json-file"
       options:
@@ -51,11 +53,13 @@ services:
     depends_on:
       - mariadb
       - mongo
+    tty: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    command: /bin/sh -c "npm i && npm start"
   lab_assistant:
     build: ${PWD}/lab_assistant
     image: naoto24kawa/lab_assistant:0.1
@@ -70,11 +74,13 @@ services:
     depends_on:
       - mariadb
       - mongo
+    tty: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    command: /bin/sh -c "npm i && npm start"
 
 networks:
   bridge_network:
