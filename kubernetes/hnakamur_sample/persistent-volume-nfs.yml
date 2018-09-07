@@ -1,0 +1,16 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-nfs
+  labels:
+    type: nfs
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    # TODO: modify path and server appropriately
+    path: /Users/hnakamur/kube-data/mysql
+    server: 192.168.99.1
