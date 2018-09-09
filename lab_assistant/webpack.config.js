@@ -9,11 +9,12 @@ module.exports = {
     path: path.resolve(__dirname, 'build')
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: 'build',
     port: 3000
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
