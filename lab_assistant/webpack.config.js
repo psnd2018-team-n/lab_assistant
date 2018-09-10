@@ -1,19 +1,24 @@
 var path = require('path');
 
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   devtool: "source-map",
   context: __dirname + "/src",
   entry: './index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/'
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: 'build',
     port: 3000
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -26,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: "file?name=[name].[ext]",
+        loaders: ["html-loader"]
       },
       {
         test: /\.css$/,
@@ -34,4 +39,13 @@ module.exports = {
       }
     ],
   },
+  plugins: [
+    new UglifyJSPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "public/index.html")
+    })
+  ],
+  performance: {
+    hints: false
+  }
 }
