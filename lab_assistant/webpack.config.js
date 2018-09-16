@@ -3,6 +3,8 @@ var path = require('path');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
 module.exports = {
   devtool: "source-map",
   context: __dirname + "/src",
@@ -40,10 +42,15 @@ module.exports = {
     ],
   },
   plugins: [
-    new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public/index.html")
-    })
+    }),
+    // 本番環境
+    ...(
+      PRODUCTION ? [
+        new UglifyJSPlugin(),
+      ] : []
+    ),
   ],
   performance: {
     hints: false
