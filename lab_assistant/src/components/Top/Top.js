@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 /**
- * ガチャ画面コンポーネント
+ * トップ画面コンポーネント
  * @extends React.Component
  */
 class Component extends React.Component {
