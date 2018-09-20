@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import Top from './top';
+import Users from './users';
 
 /**
  * 全てのリデューサを集約したリデューサ
@@ -8,6 +9,7 @@ import Top from './top';
  */
 const reducer = combineReducers({
   Top,
+  Users,
 });
 
 export default reducer;
