@@ -7,25 +7,48 @@ export class User {
   /**
    * コンストラクタ
    * @param {Number} id ID
-   * @param {String} name 名前
-   * @param {String} nameKana 名前カナ
+   * @param {UserType[]} userTypes ユーザ種別
    * @param {Gender} gender 性別
-   * @param {Date} birthdate 生年月日
-   * @param {UserType[]} userTypes ユーザタイプ
-   * @param {String} email メールアドレス
-   * @param {String} tel 電話番号
+   * @param {String} lastName 苗字
+   * @param {String} firstName 名前
+   * @param {String} lastNameKana 苗字カナ
+   * @param {String} firstNameKana 名前カナ
+   * @param {Date} birthDate 生年月日
+   * @param {String} phoneNumber 電話番号
+   * @param {String} mailAddress メールアドレス
+   * @param {Boolean} deleteFlg 削除フラグ
    */
   constructor({
-    id, name, nameKana, gender, birthdate, userTypes, email, tel,
+    id, userTypes, gender, lastName, firstName, lastNameKana, firstNameKana,
+    birthDate, phoneNumber, mailAddress, deleteFlg,
   }) {
     this.id = id;
-    this.name = name;
-    this.nameKana = nameKana;
-    this.gender = gender;
-    this.birthdate = birthdate;
     this.userTypes = userTypes;
-    this.email = email;
-    this.tel = tel;
+    this.gender = gender;
+    this.lastName = lastName;
+    this.firstName = firstName;
+    this.lastNameKana = lastNameKana;
+    this.firstNameKana = firstNameKana;
+    this.birthDate = birthDate;
+    this.phoneNumber = phoneNumber;
+    this.mailAddress = mailAddress;
+    this.deleteFlg = deleteFlg;
+  }
+
+  /**
+   * 氏名を取得します
+   * @return {String} 氏名
+   */
+  get fullName() {
+    return `${this.lastName} ${this.firstName}`;
+  }
+
+  /**
+   * 氏名カナを取得します
+   * @return {String} 氏名カナ
+   */
+  get fullNameKana() {
+    return `${this.lastNameKana} ${this.firstNameKana}`;
   }
 
   /**
