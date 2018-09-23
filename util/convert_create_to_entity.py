@@ -31,6 +31,11 @@ ENTITY_BASE = \
     '{constructor}\n'\
     '}}'
 
+DB_JS_TYPE_RELATION = dict(
+    Boolean=re.compile(r'tinyint\(1\)|bool'),
+    Date=re.compile(r'date|time'),
+    String=re.compile(r'char|text'),
+    Number=re.compile(r'.*'))
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--table", help="テーブル名", required=True)
@@ -85,8 +90,8 @@ def get_entity(table_name, database):
         raise KeyError("not found table '{}'".format(table_name))
     table = database.tables[table_name]
 
-    member_doc = '\n'.join([' * {} {{{}}} [description]'.format(
-        get_name(c), get_type(c)) for c in table.columns.values()])
+    member_doc = '\n'.join([' * @param {{{}}} {} [description]'.format(
+        get_type(c), get_name(c)) for c in table.columns.values()])
     member = ', '.join([get_name(c) for c in table.columns.values()])
     initialize = '\n'.join(['  this.{0} = {0};'.format(
         get_name(c)) for c in table.columns.values()])
@@ -114,7 +119,10 @@ def get_type(column):
     if column.foreign_table:
         type = camel_to_snake(column.foreign_table)
     else:
-        type = 'Number'
+        for t, ptn in DB_JS_TYPE_RELATION.items():
+            if ptn.search(column.type):
+                type = t
+                break
 
     type = type[0].upper() + type[1:]
     return type
