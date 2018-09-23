@@ -10,7 +10,7 @@ export class UserType {
   constructor({
     id, typeName,
   }) {
-    this.id = id;
-    this.typeName = typeName;
+    this.id = Number(id);
+    this.typeName = String(typeName);
   }
 }

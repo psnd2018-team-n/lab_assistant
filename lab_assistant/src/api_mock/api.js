@@ -1,3 +1,9 @@
+import {
+  Gender,
+  User,
+  UserType,
+}
+
 const userTypeName = {
   1: '管理者',
   2: 'スタッフ',

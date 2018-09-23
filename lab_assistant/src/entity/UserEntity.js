@@ -1,5 +1,10 @@
 import moment from 'moment';
 
+import {
+  Gender,
+  UserType,
+} from '.';
+
 /**
  * ユーザ
  */
@@ -22,17 +27,17 @@ export class User {
     id, userTypes, gender, lastName, firstName, lastNameKana, firstNameKana,
     birthDate, phoneNumber, mailAddress, deleteFlg,
   }) {
-    this.id = id;
-    this.userTypes = userTypes;
-    this.gender = gender;
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.lastNameKana = lastNameKana;
-    this.firstNameKana = firstNameKana;
-    this.birthDate = birthDate;
-    this.phoneNumber = phoneNumber;
-    this.mailAddress = mailAddress;
-    this.deleteFlg = deleteFlg;
+    this.id = Number(id);
+    this.userTypes = userTypes.map(e => new UserType(e));
+    this.gender = new Gender(gender);
+    this.lastName = String(lastName);
+    this.firstName = String(firstName);
+    this.lastNameKana = String(lastNameKana);
+    this.firstNameKana = String(firstNameKana);
+    this.birthDate = Date(birthDate);
+    this.phoneNumber = String(phoneNumber);
+    this.mailAddress = String(mailAddress);
+    this.deleteFlg = Boolean(deleteFlg);
   }
 
   /**

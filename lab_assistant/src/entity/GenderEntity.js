@@ -10,7 +10,7 @@ export class Gender {
   constructor({
     id, name,
   }) {
-    this.id = id;
-    this.name = name;
+    this.id = Number(id);
+    this.name = String(name);
   }
 }
