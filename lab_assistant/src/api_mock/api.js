@@ -1,44 +1,69 @@
 import {
-  Gender,
   User,
-  UserType,
-}
+} from '../entity';
 
-const userTypeName = {
+const userTypeNames = {
   1: '管理者',
   2: 'スタッフ',
   3: '保護者',
   4: '生徒',
 };
-const genderName = {
+const genderNames = {
   1: '男',
   2: '女',
 };
 
-const User = (id, name, nameKana, userTypeIds, genderId, tel, email) => ({
+const createGenderDate = (id, name = genderNames[id]) => ({
+  id, name,
+});
+const createUserTypeData = (id, typeName = userTypeNames[id]) => ({
+  id, typeName,
+});
+const createUserDate = (id, userTypeIds, genderId, lastName, firstName, lastNameKana, firstNameKana,
+  birthDate, phoneNumber, mailAddress, deleteFlg) => ({
   id,
-  name,
-  nameKana,
-  userTypes: userTypeIds.map(uid => ({ id: uid, name: userTypeName[uid] })),
-  gender: { id: genderId, name: genderName[genderId] },
-  tel,
-  email,
+  userTypes: userTypeIds.map(i => createUserTypeData(i)),
+  gender: createGenderDate(genderId),
+  lastName,
+  firstName,
+  lastNameKana,
+  firstNameKana,
+  birthDate,
+  phoneNumber,
+  mailAddress,
+  deleteFlg,
 });
 
 const users = [
-  User(1, '渡邉 航平', 'わたなべ こうへい', [1, 2], 1, '090-1234-5678', 'mail@example.com'),
-  User(2, '内海 順一', 'うつみ じゅんいち', [3], 1, '090-1234-5678', 'mail@example.com'),
-  User(3, '苅谷 慶太', 'かりや けいた', [3], 1, '090-1234-5678', 'mail@example.com'),
-  User(4, '河合 悠', 'かわい はるか', [3], 2, '090-1234-5678', 'mail@example.com'),
-  User(5, '小磯 順', 'こいそ じゅん', [3], 1, '090-1234-5678', 'mail@example.com'),
-  User(6, '曹 敬三', 'そう けいぞう', [3], 1, '090-1234-5678', 'mail@example.com'),
-  User(7, '前原 真理子', 'まえはら まりこ', [4], 2, '090-1234-5678', 'mail@example.com'),
-  User(8, '本山 貴子 ', 'もとやま たかこ', [4], 2, '090-1234-5678', 'mail@example.com'),
-  User(9, '岩井 勉', 'いわい つとむ', [4], 1, '090-1234-5678', 'mail@example.com'),
-  User(10, '内田 幸太郎', 'うちだ こうたろう', [4], 1, '090-1234-5678', 'mail@example.com'),
-  User(11, '大石 信也', 'おおいし しんや', [4], 1, '090-1234-5678', 'mail@example.com'),
-  User(12, '田代 徹也', 'たしろ てつや', [4], 1, '090-1234-5678', 'mail@example.com'),
-];
+  createUserDate(1, [1, 2], 1, '渡邉', '航平', 'ワタナベ', 'コウヘイ',
+    'Wed Jul 29 1998 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(2, [4], 1, '河野', '洋平', 'コウノ', 'ヨウヘイ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(3, [4], 1, '内田', '俊彦', 'ウチダ', 'トシヒコ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(4, [4], 1, '谷口', '大祐', 'タニグチ', 'ダイスケ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(5, [3], 1, '中川', '啓', 'ナカガワ', 'ケイ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(6, [4], 1, '岩田', '裕樹', 'イワタ', 'ユウキ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(7, [3], 1, '大野', '翔太郎', 'オオノ', 'ショウタロウ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(8, [4], 2, '山本', '悠', 'ヤマモト', 'ハルカ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(9, [4], 2, '奥村', '友美', 'オクムラ', 'トモミ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(10, [3], 2, '北村', '徳子', 'キタムラ', 'ノリコ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(11, [3], 2, '石山', 'さおり', 'イシヤマ', 'サオリ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(12, [3], 2, '奥野', '亜矢子', 'オクノ', 'アヤコ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(13, [4], 2, '富岡', '美咲', 'トミオカ', 'ミサキ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+  createUserDate(14, [3], 2, '岸本', '香澄', 'キシモト', 'カスミ',
+    'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
+].map(d => new User(d));
 
 function api(func) {
   return ({ asyncFlg = true, ...prams } = {}) => {

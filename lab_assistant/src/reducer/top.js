@@ -1,4 +1,4 @@
-import * as Action from '../actions/top';
+import * as Action from '../action/top';
 
 /**
  * ステータスの初期値を返します

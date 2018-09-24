@@ -11,6 +11,7 @@ import {
   Paper,
 } from '@material-ui/core';
 
+import moment from 'moment';
 import { ApplicationBar } from '../Common';
 
 /**
@@ -68,13 +69,22 @@ const UserTableHeader = () => (
       <TableCell>
         名前
       </TableCell>
-      <TableCell>
+      <TableCell padding="none">
         種別
       </TableCell>
-      <TableCell>
+      <TableCell padding="none">
+        性別
+      </TableCell>
+      <TableCell padding="none">
+        年齢
+      </TableCell>
+      <TableCell padding="none">
+        生年月日
+      </TableCell>
+      <TableCell padding="none">
         電話番号
       </TableCell>
-      <TableCell>
+      <TableCell padding="none">
         メールアドレス
       </TableCell>
     </TableRow>
@@ -89,24 +99,33 @@ const UserTableHeader = () => (
 const UserTableRow = ({ user }) => (
   <TableRow
     hover
-    onClick={() => console.warn('TODO ユーザ管理画面に飛ばす')}
+    onClick={() => console.warn('TODO ユーザ管理画面に飛ばす', user)}
   >
     <TableCell component="th" scope="row">
       <div>
         <ruby>
-          <rb>{user.name}</rb>
-          <rt>{user.nameKana}</rt>
+          <rb>{user.fullName}</rb>
+          <rt>{user.fullNameKana}</rt>
         </ruby>
       </div>
     </TableCell>
-    <TableCell>
-      {user.userTypes.map(t => t.name).join(',　')}
+    <TableCell padding="none">
+      {user.userTypes.map(t => t.typeName).join(',　')}
     </TableCell>
-    <TableCell>
-      {user.tel}
+    <TableCell padding="none">
+      {user.gender.name}
     </TableCell>
-    <TableCell>
-      {user.email}
+    <TableCell padding="none">
+      {user.age}
+    </TableCell>
+    <TableCell padding="none">
+      {moment(user.birthDate).format('YYYY月M月D日')}
+    </TableCell>
+    <TableCell padding="none">
+      {user.phoneNumber}
+    </TableCell>
+    <TableCell padding="none">
+      {user.mailAddress}
     </TableCell>
   </TableRow>
 );

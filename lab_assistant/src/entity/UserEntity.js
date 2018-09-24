@@ -34,7 +34,7 @@ export class User {
     this.firstName = String(firstName);
     this.lastNameKana = String(lastNameKana);
     this.firstNameKana = String(firstNameKana);
-    this.birthDate = Date(birthDate);
+    this.birthDate = new Date(birthDate);
     this.phoneNumber = String(phoneNumber);
     this.mailAddress = String(mailAddress);
     this.deleteFlg = Boolean(deleteFlg);
@@ -61,7 +61,7 @@ export class User {
    * @return {Number} 年齢
    */
   get age() {
-    const birth = moment(this.birthdate);
+    const birth = moment(this.birthDate);
     return moment().diff(birth, 'years');
   }
 }

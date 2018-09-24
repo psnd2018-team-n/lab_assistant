@@ -1,4 +1,4 @@
-import * as Action from '../actions/users';
+import * as Action from '../action/users';
 
 import * as API from '../api_mock/api';
 
@@ -10,7 +10,7 @@ const initialState = () => {
   const allUsers = API.getAllUsers();
   return {
     allUsers,
-    displayUsers: allUsers,
+    displayUsers: allUsers.filter(u => !u.deleteFlg),
   };
 };
 

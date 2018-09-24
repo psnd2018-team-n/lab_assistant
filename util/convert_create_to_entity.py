@@ -93,8 +93,9 @@ def get_entity(table_name, database):
     member_doc = '\n'.join([' * @param {{{}}} {} [description]'.format(
         get_type(c), get_name(c)) for c in table.columns.values()])
     member = ', '.join([get_name(c) for c in table.columns.values()])
-    initialize = '\n'.join(['  this.{0} = {0};'.format(
-        get_name(c)) for c in table.columns.values()])
+
+    initialize = '\n'.join(['  this.{0} = {1}({0});'.format(
+        get_name(c), get_cast(c)) for c in table.columns.values()])
 
     jsdoc = CONSTRUCTOR_BASE.format(
         member_doc=member_doc,
@@ -126,6 +127,15 @@ def get_type(column):
 
     type = type[0].upper() + type[1:]
     return type
+
+def get_cast(c):
+    """
+    コンストラクタで使用するキャスト・コンストラクタの呼び出しを取得します
+    """
+    if get_type(c) in ['Number', 'String', 'Boolean']:
+        return get_type(c)
+    else:
+        return 'new ' + get_type(c)
 
 def camel_to_snake(str):
     """
