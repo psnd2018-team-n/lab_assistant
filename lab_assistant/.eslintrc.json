@@ -19,6 +19,8 @@
       "class-methods-use-this": ["off"],
       "no-plusplus": ["off"],
       "no-func-assign": ["off"],
+      "no-extend-native": ["off"],
+      "no-case-declarations": ["off"],
       "no-console": [
         "error",
         {

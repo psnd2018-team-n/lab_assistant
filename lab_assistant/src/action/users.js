@@ -1,13 +1,22 @@
-export const GET_USERS = 'GET_USERS';
+export const SEARCH_USERS = 'SEARCH_USERS';
+export const CHANGE_USER_TYPE = 'CHANGE_USER_TYPE';
 
 /**
- * 時間の同期
+ * ユーザの取得
  * @return {Object} アクション
  */
-export function getUsers(conditons) {
+export function searchUsers() {
   return {
-    type: GET_USERS,
-    payload: { conditons },
+    type: SEARCH_USERS,
+    payload: {},
+    meta: {},
+  };
+}
+
+export function changeUserType(id) {
+  return {
+    type: CHANGE_USER_TYPE,
+    payload: { id },
     meta: {},
   };
 }

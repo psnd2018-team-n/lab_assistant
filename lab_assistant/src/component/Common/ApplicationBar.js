@@ -7,19 +7,16 @@ import {
 
 /**
  * ナビゲーションバーを生成
- * @param  {boolean} Home ホームアイコンを表示するか
  * @return {Object}       ナビゲーションバー
  */
-export function ApplicationBar({ Home }) {
+export function ApplicationBar() {
   return (
     <div>
       <AppBar position="sticky">
         <Toolbar>
-          {Home && (
-            <Button color="inherit" href="/top">
-              LAB Assistant
-            </Button>
-          )}
+          <Button color="inherit" href="/top">
+            LAB Assistant
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
