@@ -12,6 +12,8 @@ const initialState = () => {
     allUsers,
     displayUsers: allUsers.filter(u => !u.deleteFlg),
     checkedUserTypes: [],
+    page: 0,
+    rowsPerPage: 10,
   };
 };
 
@@ -38,7 +40,8 @@ export default function reducer(state = initialState(), action) {
 
     case Action.CHANGE_USER_TYPE:
       const checkedUserTypes = [...state.checkedUserTypes];
-      if (checkedUserTypes.contain(payload.id)) {
+      // チェック状態に応じて、IDを追加・除去
+      if (payload.checked) {
         checkedUserTypes.splice(checkedUserTypes.indexOf(payload.id), 1);
       } else {
         checkedUserTypes.push(payload.id);
@@ -46,6 +49,18 @@ export default function reducer(state = initialState(), action) {
       return {
         ...state,
         checkedUserTypes,
+      };
+
+    case Action.CHANGE_PAGE:
+      return {
+        ...state,
+        page: payload.page,
+      };
+
+    case Action.CHANGE_ROWS_PER_PAGE:
+      return {
+        ...state,
+        rowsPerPage: payload.rowsPerPage,
       };
 
     default:

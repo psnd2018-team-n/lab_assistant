@@ -45,12 +45,15 @@ def main():
     """
     メイン関数
     """
+    # sqlを全て小文字に変換
     text = ''.join(sys.stdin.readlines()).lower()
 
-    # crete文を抽出
+    # crete文パターン
     create_ptn = re.compile(r'create table [\w_]*\(.+?\);', re.DOTALL)
 
+    # DB作成
     database = db.DB()
+    # create tableごとにテーブルを作成・登録
     for create in create_ptn.findall(text):
         database.put_table(convert_create_to_table(create))
 
@@ -71,10 +74,10 @@ def convert_create_to_table(create_str):
             continue
 
         if c[0] != 'foreign':
-            #e.g. ['gender_id', 'int', 'not', 'null,']
+            #e.g. c = ['gender_id', 'int', 'not', 'null,']
             new_table.put_column(db.Column(c[0], c[1].replace(',', '')))
         else:
-            # e.g. ['foreign', 'key(gender_id)', 'references', 'gender(id)']
+            # e.g. c = ['foreign', 'key(gender_id)', 'references', 'gender(id)']
             key = re.match(r'key\((.*)\)', c[1]).group(1)
             table = re.match(r'(.+?)\(.+\)', c[3]).group(1)
             new_table.columns[key].foreign_table = table
@@ -90,21 +93,26 @@ def get_entity(table_name, database):
         raise KeyError("not found table '{}'".format(table_name))
     table = database.tables[table_name]
 
+    # jsdoc
     member_doc = '\n'.join([' * @param {{{}}} {} [description]'.format(
         get_type(c), get_name(c)) for c in table.columns.values()])
+    # 引数
     member = ', '.join([get_name(c) for c in table.columns.values()])
-
+    # コンストラクタ内容
     initialize = '\n'.join(['  this.{0} = {1}({0});'.format(
         get_name(c), get_cast(c)) for c in table.columns.values()])
 
-    jsdoc = CONSTRUCTOR_BASE.format(
+    # コンストラクタ生成
+    constructor = CONSTRUCTOR_BASE.format(
         member_doc=member_doc,
         member=member,
         initialize=initialize)
+    # インデント追加
+    constructor=re.sub(r'(.*)', lambda x: '  ' + x.group(1), constructor)
 
     return ENTITY_BASE.format(
             entity_name=camel_to_snake(table_name[0].upper() + table_name[1:]),
-            constructor=re.sub(r'(.*)', lambda x: '  ' + x.group(1), jsdoc))
+            constructor=constructor)
 
 def get_name(column):
     """
