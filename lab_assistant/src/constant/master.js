@@ -3,6 +3,7 @@ import {
   UserType,
 } from '../entity';
 
+/** 性別マスタ */
 export const GENDER = {
   MALE: new Gender({ id: 1, name: '男' }),
   FEMALE: new Gender({ id: 1, name: '女' }),
