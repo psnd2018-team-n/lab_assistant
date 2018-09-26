@@ -41,10 +41,10 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-  lab-assistant-api:
+  lab_assistant_api:
     build: ${PWD}/lab_assistant_api
     image: naoto24kawa/lab_assistant_api:0.1
-    container_name: lab-assistant-api
+    container_name: lab_assistant_api
     restart: always
     volumes:
       - ${PWD}/lab_assistant_api:/lab_assistant_api
@@ -63,10 +63,10 @@ services:
         max-size: "10m"
         max-file: "3"
     command: /bin/sh -c "npm i && npm start"
-  lab-assistant:
+  lab_assistant:
     build: ${PWD}/lab_assistant
     image: naoto24kawa/lab_assistant:0.1
-    container_name: lab-assistant
+    container_name: lab_assistant
     restart: always
     volumes:
       - ${PWD}/lab_assistant:/lab_assistant
@@ -97,8 +97,8 @@ services:
       BASIC_AUTH_USERNAME: username
       BASIC_AUTH_PASSWORD: password
     depends_on:
-      - lab-assistant-api
-      - lab-assistant
+      - lab_assistant_api
+      - lab_assistant
     tty: true
     privileged: true
     logging:

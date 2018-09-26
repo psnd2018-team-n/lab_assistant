@@ -21,7 +21,7 @@ http {
     include /etc/nginx/conf.d/*.conf;
 
     location /lab-assistant {
-      proxy_pass http://lab-assistant:3000/;
+      proxy_pass http://lab_assistant:3000/;
       auth_basic "Restricted";
       auth_basic_user_file /etc/nginx/.htpasswd;
 
@@ -31,7 +31,7 @@ http {
     }
 
     location /lab-assistant-api {
-      proxy_pass http://lab-assistant-api:3000/;
+      proxy_pass http://lab_assistant_api:3000/;
       auth_basic "Restricted";
       auth_basic_user_file /etc/nginx/.htpasswd;
 
