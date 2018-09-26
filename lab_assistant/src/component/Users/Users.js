@@ -29,6 +29,7 @@ import { USER_TYPES } from '../../constant/master';
 class Component extends React.Component {
   /**
    * Stateをセットする関数を作成
+   * @param {String} [key] キーまたはインデックス
    * @return {Function} 関数
    */
   onSetState(key) {
@@ -81,6 +82,7 @@ class Component extends React.Component {
             {/* 条件 */}
             <div style={{ margin: 10 }}>
               <Grid container spacing={24}>
+                {/* ユーザ名 */}
                 <Grid item xs={12}>
                   <TextField
                     name="name"
@@ -89,7 +91,7 @@ class Component extends React.Component {
                     onChange={this.onSetState()}
                   />
                 </Grid>
-                {/* ユーザ種別条件 */}
+                {/* ユーザ種別 */}
                 <Grid item xs={12}>
                   <Grid item xs={8}>
                     <FormControl component="fieldset" fullWidth>
@@ -144,6 +146,7 @@ class Component extends React.Component {
 /**
  * ユーザ一覧テーブル
  * @param {User[]} users ユーザ一覧
+ * @return {Object} テーブル
  */
 const UserTable = ({ users, page, rowsPerPage, onChangePage, onChangeRowsPerPage }) => (
   <Paper>

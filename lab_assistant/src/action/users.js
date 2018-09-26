@@ -4,7 +4,10 @@ export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const CHANGE_ROWS_PER_PAGE = 'CHANGE_ROWS_PER_PAGE';
 
 /**
- * ユーザの取得
+ * Stateのセット
+ * @param value セットする値
+ * @param {String} name プロパティ名
+ * @param {String} [key] キーまたはインデックス
  * @return {Object} アクション
  */
 export function setState(value, name, key) {

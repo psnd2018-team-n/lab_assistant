@@ -7,7 +7,7 @@ import {
 
 /**
  * ナビゲーションバーを生成
- * @return {Object}       ナビゲーションバー
+ * @return {Object} ナビゲーションバー
  */
 export function ApplicationBar() {
   return (

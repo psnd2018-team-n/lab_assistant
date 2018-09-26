@@ -5,7 +5,7 @@ import * as API from '../api_mock/api';
 
 /**
  * ステータスの初期値を返します
- * @return {Object}     初期値
+ * @return {Object} 初期値
  */
 const initialState = () => {
   const allUsers = API.getAllUsers();
