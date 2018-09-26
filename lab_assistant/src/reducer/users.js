@@ -1,5 +1,6 @@
-import * as Action from '../action/users';
+import moji from 'moji';
 
+import * as Action from '../action/users';
 import * as API from '../api_mock/api';
 
 /**
@@ -11,11 +12,40 @@ const initialState = () => {
   return {
     allUsers,
     displayUsers: allUsers.filter(u => !u.deleteFlg),
-    checkedUserTypes: [],
+    name: '',
+    userTypes: {},
     page: 0,
     rowsPerPage: 10,
   };
 };
+
+/**
+ * ユーザの検索を行います
+ * @param {Object} state State
+ * @return {User[]} ユーザ一覧
+ */
+function searchUsers(state) {
+  let displayUsers = [...state.allUsers].filter(u => !u.deleteFlg);
+  const { name, userTypes } = state;
+  const filters = [];
+  // 名前
+  if (name) {
+    filters.push((u) => {
+      const convertedName = moji(name).convert('HG', 'KK').toString().replace(' ', '');
+      const ptn = new RegExp(`${convertedName}`);
+      return u.fullName.replace(' ', '').match(ptn) || u.fullNameKana.replace(' ', '').match(ptn);
+    });
+  }
+  // ユーザ種別
+  if (Object.values(userTypes).some(checked => checked)) {
+    filters.push(u => u.userTypes.some(ut => userTypes[ut.id]));
+  }
+  // フィルタを適用する
+  filters.forEach((f) => {
+    displayUsers = displayUsers.filter(f);
+  });
+  return displayUsers;
+}
 
 /**
  * 画面のリデューサ
@@ -26,29 +56,20 @@ const initialState = () => {
 export default function reducer(state = initialState(), action) {
   const { type, payload } = action;
   switch (type) {
-    case Action.SEARCH_USERS:
-      let displayUsers = [...state.allUsers].filter(u => !u.deleteFlg);
-      // ユーザ種別でのフィルタ
-      if (state.checkedUserTypes.length) {
-        const isContain = u => u.userTypes.some(ut => state.checkedUserTypes.contain(ut.id));
-        displayUsers = displayUsers.filter(isContain);
-      }
-      return {
-        ...state,
-        displayUsers,
-      };
-
-    case Action.CHANGE_USER_TYPE:
-      const checkedUserTypes = [...state.checkedUserTypes];
-      // チェック状態に応じて、IDを追加・除去
-      if (payload.checked) {
-        checkedUserTypes.splice(checkedUserTypes.indexOf(payload.id), 1);
+    case Action.SET_STATE:
+      const { value, name, key } = payload;
+      const newState = { ...state };
+      if (key) {
+        newState[name][key] = value;
       } else {
-        checkedUserTypes.push(payload.id);
+        newState[name] = value;
       }
+      return newState;
+
+    case Action.SEARCH_USERS:
       return {
         ...state,
-        checkedUserTypes,
+        displayUsers: searchUsers(state),
       };
 
     case Action.CHANGE_PAGE:

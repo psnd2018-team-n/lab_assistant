@@ -16,6 +16,7 @@
     "parser": "babel-eslint",
     "rules": {
       "object-shorthand": ["off"],
+      "object-curly-newline": ["off"],
       "class-methods-use-this": ["off"],
       "no-plusplus": ["off"],
       "no-func-assign": ["off"],

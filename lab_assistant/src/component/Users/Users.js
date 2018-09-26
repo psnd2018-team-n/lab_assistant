@@ -14,12 +14,13 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Paper,
 } from '@material-ui/core';
 
 import moment from 'moment';
 
-import { USER_TYPE } from '../../constant/master';
+import { USER_TYPES } from '../../constant/master';
 
 /**
  * ユーザ一覧画面コンポーネント
@@ -27,14 +28,17 @@ import { USER_TYPE } from '../../constant/master';
  */
 class Component extends React.Component {
   /**
-   * ユーザ種別の条件を変更する関数を作成
-   * @param {Number} id ユーザ種別ID
-   * @param {Boolean} checked チェック済みか
-   * @return {Functino} 関数
+   * Stateをセットする関数を作成
+   * @return {Function} 関数
    */
-  onChangeUserType(id, checked) {
-    return () => {
-      this.props.changeUserType(id, checked);
+  onSetState(key) {
+    return (e) => {
+      const { type, name, value, checked } = e.target;
+      if (type === 'checkbox') {
+        this.props.setState(checked, name, key);
+      } else {
+        this.props.setState(value, name, key);
+      }
     };
   }
 
@@ -77,6 +81,14 @@ class Component extends React.Component {
             {/* 条件 */}
             <div style={{ margin: 10 }}>
               <Grid container spacing={24}>
+                <Grid item xs={12}>
+                  <TextField
+                    name="name"
+                    label="ユーザ名"
+                    value={this.props.name}
+                    onChange={this.onSetState()}
+                  />
+                </Grid>
                 {/* ユーザ種別条件 */}
                 <Grid item xs={12}>
                   <Grid item xs={8}>
@@ -84,15 +96,14 @@ class Component extends React.Component {
                       <FormLabel component="legend">種別</FormLabel>
                       <FormGroup row>
                         {
-                          Object.values(USER_TYPE).map(ut => (
+                          USER_TYPES.map(ut => (
                             <Grid item xs={2} key={ut.id}>
                               <FormControlLabel
                                 control={(
                                   <Checkbox
-                                    checked={this.props.checkedUserTypes.contain(ut.id)}
-                                    value={String(ut.id)}
-                                    onChange={this.onChangeUserType(ut.id,
-                                      this.props.checkedUserTypes.contain(ut.id))}
+                                    name="userTypes"
+                                    checked={this.props.userTypes[ut.id.toString()]}
+                                    onChange={this.onSetState(ut.id.toString())}
                                   />
                                 )}
                                 label={ut.typeName}
@@ -134,9 +145,7 @@ class Component extends React.Component {
  * ユーザ一覧テーブル
  * @param {User[]} users ユーザ一覧
  */
-const UserTable = ({
-  users, page, rowsPerPage, onChangePage, onChangeRowsPerPage,
-}) => (
+const UserTable = ({ users, page, rowsPerPage, onChangePage, onChangeRowsPerPage }) => (
   <Paper>
     <TablePagination
       component="div"
@@ -196,6 +205,7 @@ const UserTableRow = ({ user }) => (
     hover
     onClick={() => console.warn('TODO ユーザ管理画面に飛ばす', user)}
   >
+
     <TableCell component="th" scope="row">
       <div>
         <ruby>

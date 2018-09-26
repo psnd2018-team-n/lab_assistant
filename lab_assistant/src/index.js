@@ -8,11 +8,6 @@ import App from './container/App/App';
 
 const store = createStore(Reducers);
 
-// プロトタイプ書き換え
-Array.prototype.contain = function contain(e) {
-  return this.indexOf(e) !== -1;
-};
-
 render(
   <Provider store={store}>
     <App />
