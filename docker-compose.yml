@@ -9,12 +9,13 @@ services:
       - ${PWD}/mariadb:/var/lib/mysql
     networks:
       - bridge_network
-    ports:
-      - "3306:3306"
+    # ports:
+    #   - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: lab_assistant
     tty: true
+    privileged: true
     logging:
       driver: "json-file"
       options:
@@ -28,59 +29,83 @@ services:
       - ${PWD}/mongo:/data/db
     networks:
       - bridge_network
-    ports:
-      - "27017:27017"
+    # ports:
+    #   - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     tty: true
+    privileged: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
-  lab_assistant_api:
+  lab-assistant-api:
     build: ${PWD}/lab_assistant_api
     image: naoto24kawa/lab_assistant_api:0.1
-    container_name: lab_assistant_api
+    container_name: lab-assistant-api
     restart: always
     volumes:
       - ${PWD}/lab_assistant_api:/lab_assistant_api
-    ports:
-      - "13000:3000"
+    # ports:
+    #   - 13000:3000
     networks:
       - bridge_network
     depends_on:
       - mariadb
       - mongo
     tty: true
+    privileged: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
     command: /bin/sh -c "npm i && npm start"
-  lab_assistant:
+  lab-assistant:
     build: ${PWD}/lab_assistant
     image: naoto24kawa/lab_assistant:0.1
-    container_name: lab_assistant
+    container_name: lab-assistant
     restart: always
     volumes:
       - ${PWD}/lab_assistant:/lab_assistant
-    ports:
-      - "23000:3000"
+    # ports:
+    #   - 23000:3000
     networks:
       - bridge_network
     depends_on:
       - mariadb
       - mongo
     tty: true
+    privileged: true
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
     command: /bin/sh -c "npm i && npm start"
+  nginx:
+    build: ${PWD}/nginx
+    image: naoto24kawa/nginx:0.1
+    container_name: nginx
+    networks:
+      - bridge_network
+    ports:
+      - 80:80
+    environment:
+      BASIC_AUTH_USERNAME: username
+      BASIC_AUTH_PASSWORD: password
+    depends_on:
+      - lab-assistant-api
+      - lab-assistant
+    tty: true
+    privileged: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   bridge_network:
