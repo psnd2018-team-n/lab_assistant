@@ -1,10 +1,10 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Component from '../../components/Top/Top';
-import * as Actions from '../../actions/top';
+import Component from '../../component/Users/Users';
+import * as Actions from '../../action/users';
 
-const mapStateToProps = state => state.Top;
+const mapStateToProps = state => state.Users;
 
 const mapDispatchToProps = dispatch => bindActionCreators(Actions, dispatch);
 
