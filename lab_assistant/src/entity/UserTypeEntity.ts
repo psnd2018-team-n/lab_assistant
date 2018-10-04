@@ -2,6 +2,8 @@
  * ユーザ種別
  */
 export class UserType {
+    id: number
+    typeName: string
   /**
    * コンストラクタ
    * @param {Number} id ID

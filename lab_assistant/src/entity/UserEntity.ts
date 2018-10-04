@@ -9,6 +9,18 @@ import {
  * ユーザ
  */
 export class User {
+  id: number
+  userTypes: UserType[]
+  gender: Gender
+  lastName: string
+  firstName: string
+  lastNameKana: string
+  firstNameKana: string
+  birthDate: Date
+  phoneNumber: string
+  mailAddress: string
+  deleteFlg: boolean
+
   /**
    * コンストラクタ
    * @param {Number} id ID

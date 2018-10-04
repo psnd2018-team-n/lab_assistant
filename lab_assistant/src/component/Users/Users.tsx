@@ -32,7 +32,7 @@ class Component extends React.Component {
    * @param {String} [key] キーまたはインデックス
    * @return {Function} 関数
    */
-  onSetState(key) {
+  onSetState(key?) {
     return (e) => {
       const { type, name, value, checked } = e.target;
       if (type === 'checkbox') {

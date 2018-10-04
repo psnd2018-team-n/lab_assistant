@@ -2,6 +2,8 @@
  * 性別
  */
 export class Gender {
+  id: number
+  name: string
   /**
    * コンストラクタ
    * @param {Number} id ID
