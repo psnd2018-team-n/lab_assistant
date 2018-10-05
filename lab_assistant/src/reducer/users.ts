@@ -51,8 +51,8 @@ function searchUsers(state: object): User[] {
 /**
  * 画面のリデューサ
  * @param  {object} [state=initialState] 画面の状態
- * @param  {object} action               アクション
- * @return {object}                      画面の状態
+ * @param  {object} action アクション
+ * @return {object} 画面の状態
  */
 export default function reducer(state: object = initialState(), action: object): object {
   const { type, payload } = action;

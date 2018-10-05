@@ -1,28 +1,23 @@
-import * as Action from '../action/top';
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
+
+import { actions } from '../action/top';
+
+export interface TopState {
+  time: Date;
+}
 
 /**
  * ステータスの初期値を返します
- * @return {object} 初期値
+ * @return {State} 初期値
  */
-const initialState = (): object => ({
+const initialState = (): TopState => ({
   time: new Date(),
 });
 
-/**
- * 画面のリデューサ
- * @param  {object} [state=initialState] 画面の状態
- * @param  {object} action アクション
- * @return {object} 画面の状態
- */
-export default function reducer(state: object = initialState(), action: object): object {
-  const { type } = action;
-  switch (type) {
-    case Action.SYNC_DATE:
+export const topReducer = reducerWithInitialState(initialState())
+    .case(actions.syncDate, (state) => {
       return {
         ...state,
         time: new Date(),
       };
-    default:
-      return state;
-  }
-}
+    });

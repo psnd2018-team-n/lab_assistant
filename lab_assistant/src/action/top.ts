@@ -1,13 +1,8 @@
-export const SYNC_DATE = 'SYNC_DATE';
+import actionCreatorFactory from 'typescript-fsa';
 
-/**
- * 時間の同期
- * @return {object} アクション
- */
-export function syncDate(): object {
-  return {
-    type: SYNC_DATE,
-    payload: {},
-    meta: {},
-  };
-}
+const actionCreator = actionCreatorFactory();
+
+export const actions = {
+  /** 時間の同期 */
+  syncDate: actionCreator<string>('SYNC_DATE'),
+};

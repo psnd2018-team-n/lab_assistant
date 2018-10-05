@@ -22,7 +22,7 @@ function Component() {
           {/* トップページ */}
           <Route exact path="/top" component={Top} />
           {/* ユーザ一覧ページ */}
-          <Route exact path="/user" component={Users} />
+          {/* <Route exact path="/user" component={Users} /> */}
           {/* TODO 2018/9/10 watanabe 404ページを作成する */}
           <Route component={() => <h1 style={{ color: '#8e8e8e' }}>404 Not found.</h1>} />
         </Switch>

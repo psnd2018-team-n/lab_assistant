@@ -1,15 +1,20 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 
-import Top from './top';
-import Users from './users';
+import { topReducer, TopState } from './top';
+// import { userReducer, UserState } from './users';
+
+export type AppState = {
+  top: TopState,
+  // user: UserState,
+};
 
 /**
  * 全てのリデューサを集約したリデューサ
- * @type {Object}
+ * @type {Reducer<AppState>}
  */
-const reducer = combineReducers({
-  Top,
-  Users,
+const reducer: Reducer<AppState> = combineReducers<AppState>({
+  top: topReducer,
+  // user: userReducer,
 });
 
 export default reducer;

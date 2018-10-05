@@ -1,16 +1,10 @@
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-
 import Component from '../../component/Top/Top';
-import * as Actions from '../../action/top';
+import { TopState } from '../../reducer/top';
+import { actions } from '../../action/top';
 
-const mapStateToProps = state => state.Top;
+const mapStateToProps = (state: TopState) => state;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => ({ dispatch });;
 
-const mapDispatchToProps = dispatch => bindActionCreators(Actions, dispatch);
-
-const Container = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Component);
-
-export default Container;
+export default connect<TopState, any>(mapStateToProps, mapDispatchToProps)(Component);
