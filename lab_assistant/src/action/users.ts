@@ -6,11 +6,11 @@ export const CHANGE_ROWS_PER_PAGE = 'CHANGE_ROWS_PER_PAGE';
 /**
  * Stateのセット
  * @param value セットする値
- * @param {String} name プロパティ名
- * @param {String} [key] キーまたはインデックス
- * @return {Object} アクション
+ * @param {string} name プロパティ名
+ * @param {string} [key] キーまたはインデックス
+ * @return {object} アクション
  */
-export function setState(value, name, key) {
+export function setState(value, name: string, key: string): object {
   return {
     type: SET_STATE,
     payload: { value, name, key },
@@ -20,9 +20,9 @@ export function setState(value, name, key) {
 
 /**
  * ユーザの取得
- * @return {Object} アクション
+ * @return {object} アクション
  */
-export function searchUsers() {
+export function searchUsers(): object {
   return {
     type: SEARCH_USERS,
     payload: {},
@@ -32,10 +32,10 @@ export function searchUsers() {
 
 /**
  * ページ変更
- * @param {Number} page 変更後ページ番号
- * @return {Object} アクション
+ * @param {number} page 変更後ページ番号
+ * @return {object} アクション
  */
-export function changePage(page) {
+export function changePage(page: number): object {
   return {
     type: CHANGE_PAGE,
     payload: { page },
@@ -45,10 +45,10 @@ export function changePage(page) {
 
 /**
  * １ページあたりの行数の変更
- * @param {Number} rowsPerPage 変更後の１ページあたりの行数
- * @return {Object} アクション
+ * @param {number} rowsPerPage 変更後の１ページあたりの行数
+ * @return {object} アクション
  */
-export function changeRowsPerPage(rowsPerPage) {
+export function changeRowsPerPage(rowsPerPage: number): object {
   return {
     type: CHANGE_ROWS_PER_PAGE,
     payload: { rowsPerPage },

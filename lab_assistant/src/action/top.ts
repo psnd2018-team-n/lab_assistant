@@ -2,9 +2,9 @@ export const SYNC_DATE = 'SYNC_DATE';
 
 /**
  * 時間の同期
- * @return {Object} アクション
+ * @return {object} アクション
  */
-export function syncDate() {
+export function syncDate(): object {
   return {
     type: SYNC_DATE,
     payload: {},

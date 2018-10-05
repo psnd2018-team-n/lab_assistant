@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   Button,
@@ -18,7 +18,7 @@ import {
   Paper,
 } from '@material-ui/core';
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 import { USER_TYPES } from '../../constant/master';
 
@@ -29,10 +29,10 @@ import { USER_TYPES } from '../../constant/master';
 class Component extends React.Component {
   /**
    * Stateをセットする関数を作成
-   * @param {String} [key] キーまたはインデックス
+   * @param {string} [key] キーまたはインデックス
    * @return {Function} 関数
    */
-  onSetState(key?) {
+  onSetState(key?: string): Function {
     return (e) => {
       const { type, name, value, checked } = e.target;
       if (type === 'checkbox') {
@@ -47,7 +47,7 @@ class Component extends React.Component {
    * 条件を適応する関数を作成
    * @return {Function} 関数
    */
-  onApply() {
+  onApply(): Function {
     return () => {
       this.props.searchUsers();
     };
@@ -57,7 +57,7 @@ class Component extends React.Component {
    * ページを変更する関数を作成
    * @return {Function} 関数
    */
-  onChangePage() {
+  onChangePage(): Function {
     return (_, page) => {
       this.props.changePage(page);
     };
@@ -67,7 +67,7 @@ class Component extends React.Component {
    * １ページあたりの行数を変更する関数を作成
    * @return {Function} 関数
    */
-  onChangeRowsPerPage() {
+  onChangeRowsPerPage(): Function {
     return (e) => {
       const rowsPerPage = e.target.value;
       this.props.changeRowsPerPage(rowsPerPage);
@@ -145,46 +145,51 @@ class Component extends React.Component {
 
 /**
  * ユーザ一覧テーブル
- * @param {User[]} users ユーザ一覧
- * @return {Object} テーブル
+ * @param {object} param 引数
+ * @param {User[]} param.users ユーザ一覧
+ * @param {number} param.page ページ番号
+ * @param {number} param.rowsPerPage ページあたりの行数
+ * @param {Function} param.onChangePage ページ変更関数
+ * @param {Function} param.onChangeRowsPerPage ページあたりの行数変更関数
+ * @return {JSX.Element} テーブル
  */
-const UserTable = ({ users, page, rowsPerPage, onChangePage, onChangeRowsPerPage }) => (
+const UserTable = (param: { users, page, rowsPerPage, onChangePage, onChangeRowsPerPage }): JSX.Element => (
   <Paper>
     <TablePagination
       component="div"
-      count={users.length}
-      rowsPerPage={rowsPerPage}
+      count={param.users.length}
+      rowsPerPage={param.rowsPerPage}
       rowsPerPageOptions={[5, 10, 15]}
-      page={page}
-      onChangePage={onChangePage}
-      onChangeRowsPerPage={onChangeRowsPerPage}
+      page={param.page}
+      onChangePage={param.onChangePage}
+      onChangeRowsPerPage={param.onChangeRowsPerPage}
     />
     <Table>
       <UserTableHeader />
       <TableBody>
         {
-          users.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+          param.users.slice(param.page * param.rowsPerPage, (param.page + 1) * param.rowsPerPage)
             .map(user => <UserTableRow key={user.id} user={user} />)
         }
       </TableBody>
     </Table>
     <TablePagination
       component="div"
-      count={users.length}
-      rowsPerPage={rowsPerPage}
+      count={param.users.length}
+      rowsPerPage={param.rowsPerPage}
       rowsPerPageOptions={[5, 10, 15]}
-      page={page}
-      onChangePage={onChangePage}
-      onChangeRowsPerPage={onChangeRowsPerPage}
+      page={param.page}
+      onChangePage={param.onChangePage}
+      onChangeRowsPerPage={param.onChangeRowsPerPage}
     />
   </Paper>
 );
 
 /**
  * ユーザ一覧テーブルのヘッダ
- * @return {Object} ヘッダ
+ * @return {JSX.Element} ヘッダ
  */
-const UserTableHeader = () => (
+const UserTableHeader = (): JSX.Element => (
   <TableHead>
     <TableRow>
       <TableCell>名前</TableCell>
@@ -201,9 +206,9 @@ const UserTableHeader = () => (
 /**
  * ユーザ一覧テーブルの1つの行
  * @param {User} user ユーザ情報
- * @return {Object} 行
+ * @return {JSX.Element} 行
  */
-const UserTableRow = ({ user }) => (
+const UserTableRow = ({ user }: any): JSX.Element => (
   <TableRow
     hover
     onClick={() => console.warn('TODO ユーザ管理画面に飛ばす', user)}
@@ -212,7 +217,7 @@ const UserTableRow = ({ user }) => (
     <TableCell component="th" scope="row">
       <div>
         <ruby>
-          <rb>{user.fullName}</rb>
+          <span>{user.fullName}</span>
           <rt>{user.fullNameKana}</rt>
         </ruby>
       </div>

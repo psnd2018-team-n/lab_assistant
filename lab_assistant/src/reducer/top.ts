@@ -2,19 +2,19 @@ import * as Action from '../action/top';
 
 /**
  * ステータスの初期値を返します
- * @return {Object}     初期値
+ * @return {object} 初期値
  */
-const initialState = () => ({
+const initialState = (): object => ({
   time: new Date(),
 });
 
 /**
  * 画面のリデューサ
- * @param  {Object} [state=initialState] 画面の状態
- * @param  {Object} action               アクション
- * @return {Object}                      画面の状態
+ * @param  {object} [state=initialState] 画面の状態
+ * @param  {object} action アクション
+ * @return {object} 画面の状態
  */
-export default function reducer(state = initialState(), action) {
+export default function reducer(state: object = initialState(), action: object): object {
   const { type } = action;
   switch (type) {
     case Action.SYNC_DATE:

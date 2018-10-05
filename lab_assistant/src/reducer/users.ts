@@ -1,13 +1,14 @@
-import moji from 'moji';
+import * as moji from 'moji';
 
 import * as Action from '../action/users';
 import * as API from '../api_mock/api';
+import { User } from '../entity';
 
 /**
  * ステータスの初期値を返します
- * @return {Object} 初期値
+ * @return {object} 初期値
  */
-const initialState = () => {
+const initialState = (): object => {
   const allUsers = API.getAllUsers();
   return {
     allUsers,
@@ -21,10 +22,10 @@ const initialState = () => {
 
 /**
  * ユーザの検索を行います
- * @param {Object} state State
+ * @param {object} state State
  * @return {User[]} ユーザ一覧
  */
-function searchUsers(state) {
+function searchUsers(state: object): User[] {
   let displayUsers = [...state.allUsers].filter(u => !u.deleteFlg);
   const { name, userTypes } = state;
   const filters = [];
@@ -37,7 +38,7 @@ function searchUsers(state) {
     });
   }
   // ユーザ種別
-  if (Object.values(userTypes).some(checked => checked)) {
+  if (Object.values(userTypes).some(checked => !!checked)) {
     filters.push(u => u.userTypes.some(ut => userTypes[ut.id]));
   }
   // フィルタを適用する
@@ -49,11 +50,11 @@ function searchUsers(state) {
 
 /**
  * 画面のリデューサ
- * @param  {Object} [state=initialState] 画面の状態
- * @param  {Object} action               アクション
- * @return {Object}                      画面の状態
+ * @param  {object} [state=initialState] 画面の状態
+ * @param  {object} action               アクション
+ * @return {object}                      画面の状態
  */
-export default function reducer(state = initialState(), action) {
+export default function reducer(state: object = initialState(), action: object): object {
   const { type, payload } = action;
   switch (type) {
     case Action.SET_STATE:
