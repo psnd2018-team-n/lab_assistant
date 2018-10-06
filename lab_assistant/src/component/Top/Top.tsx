@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 
-interface Props {
-  time: Date,
-  syncDate: Function,
-}
+import { TopAction } from '../../action/top';
+import { TopState } from '../../reducer/top';
+
+type Props = TopAction & TopState;
 interface State {
-  timer: number,
+  timer: any,
 }
 
 /**
