@@ -1,5 +1,4 @@
-import actionCreatorFactory from 'typescript-fsa';
-import { Action } from 'typescript-fsa';
+import { actionCreatorFactory, Action } from 'typescript-fsa';
 
 const actionCreator = actionCreatorFactory();
 

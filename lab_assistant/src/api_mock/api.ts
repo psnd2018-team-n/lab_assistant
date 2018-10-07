@@ -21,17 +21,17 @@ const createUserTypeData = (id, typeName = userTypeNames[id]) => ({
 });
 const createUserDate = (id, userTypeIds, genderId, lastName, firstName, lastNameKana, firstNameKana,
   birthDate, phoneNumber, mailAddress, deleteFlg) => ({
-  id,
-  userTypes: userTypeIds.map(i => createUserTypeData(i)),
-  gender: createGenderDate(genderId),
-  lastName,
-  firstName,
-  lastNameKana,
-  firstNameKana,
-  birthDate,
-  phoneNumber,
-  mailAddress,
-  deleteFlg,
+    id,
+    userTypes: userTypeIds.map(i => createUserTypeData(i)),
+    gender: createGenderDate(genderId),
+    lastName,
+    firstName,
+    lastNameKana,
+    firstNameKana,
+    birthDate,
+    phoneNumber,
+    mailAddress,
+    deleteFlg,
 });
 
 const users = [
