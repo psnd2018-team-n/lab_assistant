@@ -1,7 +1,10 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import * as moji from 'moji';
 
-import { User } from '../entity';
+import {
+  User,
+  UserType,
+} from '../entity';
 import * as API from '../api_mock/api';
 import { actions } from '../action/users';
 
@@ -9,7 +12,7 @@ export interface UsersState {
   allUsers: User[];
   displayUsers: User[];
   name: string;
-  userTypes: object; // TODO
+  userTypes: any; // TODO
   page: number;
   rowsPerPage: number;
 }
@@ -22,7 +25,7 @@ const initialState = (): UsersState => {
   const allUsers = API.getAllUsers();
   return {
     allUsers,
-    displayUsers: allUsers.filter(u => !u.deleteFlg),
+    displayUsers: allUsers.filter((u: User) => !u.deleteFlg),
     name: '',
     userTypes: {},
     page: 0,
@@ -41,16 +44,16 @@ function searchUsers(state: UsersState): User[] {
   const filters = [];
   // 名前
   if (name) {
-    filters.push((u) => {
+    filters.push((u: User): boolean => {
       const convertedName = moji(name).convert('HG', 'KK').toString().replace(' ', '');
       const ptn = new RegExp(`${convertedName}`);
-      return u.fullName.replace(' ', '').match(ptn)
-          || u.fullNameKana.replace(' ', '').match(ptn);
+      return Boolean(u.fullName.replace(' ', '').match(ptn)
+          || u.fullNameKana.replace(' ', '').match(ptn));
     });
   }
   // ユーザ種別
-  if (Object.values(userTypes).some(checked => !!checked)) {
-    filters.push(u => u.userTypes.some(ut => userTypes[ut.id]));
+  if (Object.values(userTypes).some((checked): boolean => Boolean(checked))) {
+    filters.push((u: User): boolean => u.userTypes.some((ut: UserType) => userTypes[ut.id]));
   }
   // フィルタを適用する
   filters.forEach((f) => {
@@ -64,7 +67,7 @@ export const usersReducer = reducerWithInitialState(initialState())
     // Stateのセット
     .case(actions.setState, (state, payload) => {
       const { value, name, key } = payload;
-      const newState = { ...state };
+      const newState: any = { ...state };
       if (key) {
         newState[name][key] = value;
       } else {

@@ -2,25 +2,26 @@ import {
   User,
 } from '../entity';
 
-const userTypeNames = {
+const userTypeNames: any = {
   1: '管理者',
   2: 'スタッフ',
   3: '保護者',
   4: '生徒',
 };
-const genderNames = {
+const genderNames: any = {
   1: '男',
   2: '女',
 };
 
-const createGenderDate = (id, name = genderNames[id]) => ({
+const createGenderDate = (id: number, name: string = genderNames[id]) => ({
   id, name,
 });
-const createUserTypeData = (id, typeName = userTypeNames[id]) => ({
+const createUserTypeData = (id: number, typeName: string = userTypeNames[id]) => ({
   id, typeName,
 });
-const createUserDate = (id, userTypeIds, genderId, lastName, firstName, lastNameKana, firstNameKana,
-  birthDate, phoneNumber, mailAddress, deleteFlg) => ({
+const createUserDate = (id: number, userTypeIds: number[], genderId: number, lastName: string, firstName: string,
+  lastNameKana: string, firstNameKana: string, birthDate: string, phoneNumber: string, mailAddress: string, deleteFlg: boolean) => (
+  {
     id,
     userTypes: userTypeIds.map(i => createUserTypeData(i)),
     gender: createGenderDate(genderId),
@@ -32,7 +33,8 @@ const createUserDate = (id, userTypeIds, genderId, lastName, firstName, lastName
     phoneNumber,
     mailAddress,
     deleteFlg,
-});
+  }
+);
 
 const users = [
   createUserDate(1, [1, 2], 1, '渡邉', '航平', 'ワタナベ', 'コウヘイ',
@@ -65,7 +67,7 @@ const users = [
     'Sat Jan 01 2000 00:00:00 GMT+0900 (JST)', '090-1234-5678', 'lab-assistant@example.com', false),
 ].map(d => new User(d));
 
-function api(func) {
+function api(func: Function) {
   return ({ asyncFlg = true, ...prams } = {}) => {
     if (asyncFlg) {
       return func(prams);

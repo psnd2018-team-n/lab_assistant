@@ -9,17 +9,17 @@ import {
  * ユーザ
  */
 export class User {
-  id: number
-  userTypes: UserType[]
-  gender: Gender
-  lastName: string
-  firstName: string
-  lastNameKana: string
-  firstNameKana: string
-  birthDate: Date
-  phoneNumber: string
-  mailAddress: string
-  deleteFlg: boolean
+  id: number;
+  userTypes: UserType[];
+  gender: Gender;
+  lastName: string;
+  firstName: string;
+  lastNameKana: string;
+  firstNameKana: string;
+  birthDate: Date;
+  phoneNumber: string;
+  mailAddress: string;
+  deleteFlg: boolean;
 
   /**
    * コンストラクタ
@@ -38,9 +38,9 @@ export class User {
   constructor({
     id, userTypes, gender, lastName, firstName, lastNameKana, firstNameKana,
     birthDate, phoneNumber, mailAddress, deleteFlg,
-  }) {
+  }: any) {
     this.id = Number(id);
-    this.userTypes = userTypes.map(e => new UserType(e));
+    this.userTypes = userTypes.map((e: any) => new UserType(e));
     this.gender = new Gender(gender);
     this.lastName = String(lastName);
     this.firstName = String(firstName);

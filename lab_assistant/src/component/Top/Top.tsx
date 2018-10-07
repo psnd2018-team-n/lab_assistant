@@ -14,7 +14,7 @@ interface State {
  * @extends React.Component
  */
 class Component extends React.Component<Props, State> {
-  constructor(props, context) {
+  constructor(props: Props, context: any) {
     super(props, context);
     this.state = {
       timer: null,
@@ -44,4 +44,4 @@ class Component extends React.Component<Props, State> {
   }
 }
 
-export default withRouter(Component);
+export default withRouter<any>(Component);
