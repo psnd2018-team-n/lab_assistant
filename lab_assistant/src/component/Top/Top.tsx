@@ -6,7 +6,7 @@ import { TopState } from '../../reducer/top';
 
 type Props = TopAction & TopState;
 interface State {
-  timer: any,
+  timer: any;
 }
 
 /**

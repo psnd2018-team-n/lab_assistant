@@ -8,7 +8,7 @@ export interface TopState {
 
 /**
  * ステータスの初期値を返します
- * @return {State} 初期値
+ * @return {TopState} 初期値
  */
 const initialState = (): TopState => ({
   time: new Date(),

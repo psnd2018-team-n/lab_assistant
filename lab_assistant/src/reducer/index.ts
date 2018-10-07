@@ -1,11 +1,11 @@
 import { combineReducers, Reducer } from 'redux';
 
 import { topReducer, TopState } from './top';
-// import { userReducer, UserState } from './users';
+import { usersReducer, UsersState } from './users';
 
 export type AppState = {
   top: TopState,
-  // user: UserState,
+  users: UsersState,
 };
 
 /**
@@ -14,7 +14,7 @@ export type AppState = {
  */
 const reducer: Reducer<AppState> = combineReducers<AppState>({
   top: topReducer,
-  // user: userReducer,
+  users: usersReducer,
 });
 
 export default reducer;
