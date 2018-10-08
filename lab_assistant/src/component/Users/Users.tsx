@@ -29,10 +29,10 @@ interface State {}
 class Component extends React.Component<Props, State> {
   /**
    * Stateをセットする関数を作成
-   * @param {string} [key] キーまたはインデックス
+   * @param {any} [key] キーまたはインデックス
    * @return {Function} 関数
    */
-  onSetState(key?: string): (e: React.ChangeEvent<HTMLInputElement>) => void {
+  onSetState(key?: any): (e: React.ChangeEvent<HTMLInputElement>) => void {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       const { type, name, value, checked } = e.target;
       if (type === 'checkbox') {
@@ -103,9 +103,9 @@ class Component extends React.Component<Props, State> {
                               <FormControlLabel
                                 control={(
                                   <Checkbox
-                                    name="userTypes"
-                                    checked={this.props.userTypes[ut.id.toString()]}
-                                    onChange={this.onSetState(ut.id.toString())}
+                                    name="checkedFlgByUserTypeId"
+                                    checked={this.props.checkedFlgByUserTypeId.get(ut.id)}
+                                    onChange={this.onSetState(ut.id)}
                                   />
                                 )}
                                 label={ut.typeName}

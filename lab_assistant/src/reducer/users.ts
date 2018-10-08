@@ -12,7 +12,7 @@ export interface UsersState {
   allUsers: User[];
   displayUsers: User[];
   name: string;
-  userTypes: any; // TODO
+  checkedFlgByUserTypeId: Map<number, boolean>;
   page: number;
   rowsPerPage: number;
 }
@@ -27,34 +27,39 @@ const initialState = (): UsersState => {
     allUsers,
     displayUsers: allUsers.filter((u: User) => !u.deleteFlg),
     name: '',
-    userTypes: {},
+    checkedFlgByUserTypeId: new Map<number, boolean>(),
     page: 0,
     rowsPerPage: 10,
   };
 };
 
 /**
- * ユーザの検索を行います
+ * ユーザの検索
  * @param {UsersState} state State
  * @return {User[]} ユーザ一覧
  */
 function searchUsers(state: UsersState): User[] {
   let displayUsers = [...state.allUsers].filter(u => !u.deleteFlg);
-  const { name, userTypes } = state;
-  const filters = [];
+  const { name, checkedFlgByUserTypeId } = state;
+  // フィルタリング関数
+  type filterFunc = (u: User) => boolean;
+  const filters: filterFunc[] = [];
+
   // 名前
   if (name) {
     filters.push((u: User): boolean => {
       const convertedName = moji(name).convert('HG', 'KK').toString().replace(' ', '');
       const ptn = new RegExp(`${convertedName}`);
-      return Boolean(u.fullName.replace(' ', '').match(ptn)
+      return Boolean(moji(u.fullName).convert('HG', 'KK').toString().replace(' ', '').match(ptn)
           || u.fullNameKana.replace(' ', '').match(ptn));
     });
   }
   // ユーザ種別
-  if (Object.values(userTypes).some((checked): boolean => Boolean(checked))) {
-    filters.push((u: User): boolean => u.userTypes.some((ut: UserType) => userTypes[ut.id]));
+  if (Array.from(checkedFlgByUserTypeId.values()).some((checked): boolean => Boolean(checked))) {
+    filters.push((u: User): boolean =>
+      u.userTypes.some((ut: UserType) => Boolean(checkedFlgByUserTypeId.get(ut.id))));
   }
+
   // フィルタを適用する
   filters.forEach((f) => {
     displayUsers = displayUsers.filter(f);
@@ -69,24 +74,31 @@ export const usersReducer = reducerWithInitialState(initialState())
       const { value, name, key } = payload;
       const newState: any = { ...state };
       if (key) {
-        newState[name][key] = value;
+        if (newState[name] instanceof Map) {
+          newState[name].set(key, value);
+        } else {
+          newState[name][key] = value;
+        }
       } else {
         newState[name] = value;
       }
       return newState;
     })
+    // ユーザの検索
     .case(actions.searchUsers, (state) => {
       return {
         ...state,
         displayUsers: searchUsers(state),
       };
     })
+    // ページ変更
     .case(actions.changePage, (state, payload) => {
       return {
         ...state,
         page: payload.page,
       };
     })
+    // １ページあたりの行数の変更
     .case(actions.changeRowsPerPage, (state, payload) => {
       return {
         ...state,

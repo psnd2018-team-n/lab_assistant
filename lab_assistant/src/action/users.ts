@@ -6,11 +6,11 @@ const actionCreator = actionCreatorFactory();
 interface SetStatePayload {
   value: any;
   name: string;
-  key?: string;
+  key?: any;
 }
 const setState = actionCreator<SetStatePayload>('SET_STATE');
 
-/** ユーザの取得 */
+/** ユーザの検索 */
 const searchUsers = actionCreator('SEARCH_USERS');
 
 /** ページ変更 */

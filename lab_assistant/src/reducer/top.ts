@@ -15,6 +15,7 @@ const initialState = (): TopState => ({
 });
 
 export const topReducer = reducerWithInitialState(initialState())
+    // 時間の同期
     .case(actions.syncDate, (state) => {
       return {
         ...state,
