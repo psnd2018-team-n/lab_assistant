@@ -2,6 +2,8 @@
  * 性別
  */
 export class Gender {
+  id: number;
+  name: string;
   /**
    * コンストラクタ
    * @param {Number} id ID
@@ -9,7 +11,7 @@ export class Gender {
    */
   constructor({
     id, name,
-  }) {
+  }: any) {
     this.id = Number(id);
     this.name = String(name);
   }
