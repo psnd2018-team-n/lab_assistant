@@ -29,14 +29,14 @@ module.exports = {
         enforce: 'pre',
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: ['tslint-loader']
+        loader: PRODUCTION ? ['tslint-loader'] : []
       },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         loaders: ['ts-loader'],
       },
-      { 
+      {
         test: /\.html$/,
         loaders: ['html-loader']
       },
