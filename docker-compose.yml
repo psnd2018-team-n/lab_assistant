@@ -8,10 +8,7 @@ services:
     volumes:
       - ${PWD}/mariadb:/var/lib/mysql
       - ${PWD}/lab_assistant_api/ddl:/lab_assistant_api/ddl
-    networks:
-      - bridge_network
-    # ports:
-    #   - 3306:3306
+      - /shared/mariadb:/shared
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: lab_assistant
@@ -22,40 +19,40 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-  mongo:
-    image: mongo
-    container_name: mongo
-    restart: always
-    volumes:
-      - ${PWD}/mongo:/data/db
-    networks:
-      - bridge_network
-    # ports:
-    #   - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    tty: true
-    privileged: true
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+  # mongo:
+  #   image: mongo
+  #   container_name: mongo
+  #   restart: always
+  #   volumes:
+  #     - ${PWD}/mongo:/data/db
+  #     - /shared/mongo:/shared
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #   tty: true
+  #   privileged: true
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
   lab_assistant_api:
     build: ${PWD}/lab_assistant_api
-    image: naoto24kawa/lab_assistant_api:0.1
+    image: naoto24kawa/lab_assistant_api:1.0
     container_name: lab_assistant_api
     restart: always
     volumes:
       - ${PWD}/lab_assistant_api:/lab_assistant_api
+      - /shared/lab_assistant_api:/shared
+    expose:
+     - 3000
     ports:
       - 13000:3000
-    networks:
-      - bridge_network
     depends_on:
       - mariadb
-      - mongo
+      # - mongo
+    environment:
+      VIRTUAL_HOST: lab_assistant_api.elchika.club
     tty: true
     privileged: true
     logging:
@@ -66,18 +63,21 @@ services:
     command: /bin/sh -c "npm i && npm start"
   lab_assistant:
     build: ${PWD}/lab_assistant
-    image: naoto24kawa/lab_assistant:0.1
+    image: naoto24kawa/lab_assistant:1.0
     container_name: lab_assistant
     restart: always
     volumes:
       - ${PWD}/lab_assistant:/lab_assistant
+      - /shared/lab_assistant:/shared
+    expose:
+     - 3000
     ports:
       - 23000:3000
-    networks:
-      - bridge_network
     depends_on:
       - mariadb
-      - mongo
+      # - mongo
+    environment:
+      VIRTUAL_HOST: lab_assistant.elchika.club
     tty: true
     privileged: true
     logging:
@@ -86,27 +86,8 @@ services:
         max-size: "10m"
         max-file: "3"
     command: /bin/sh -c "npm i && npm start"
-  # nginx:
-  #   build: ${PWD}/nginx
-  #   image: naoto24kawa/nginx:0.1
-  #   container_name: nginx
-  #   networks:
-  #     - bridge_network
-  #   ports:
-  #     - 80:80
-  #   environment:
-  #     BASIC_AUTH_USERNAME: username
-  #     BASIC_AUTH_PASSWORD: password
-  #   depends_on:
-  #     - lab_assistant_api
-  #     - lab_assistant
-  #   tty: true
-  #   privileged: true
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "3"
 
 networks:
-  bridge_network:
+  default:
+    external:
+      name: common_link

@@ -1,5 +1,8 @@
 -- initialize all tables in lab_assistant database.
 
+-- MariaDB [mysql]> grant all privileges on lab_assistant.* to root@"mariadb" identified by 'password' with grant option;
+-- Query OK, 0 rows affected, 1 warning (0.002 sec)
+
 -- delete tables if exists.
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_type;

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   AppBar,
   Button,
@@ -7,9 +7,9 @@ import {
 
 /**
  * ナビゲーションバーを生成
- * @return {Object} ナビゲーションバー
+ * @return {JSX.Element} ナビゲーションバー
  */
-export function ApplicationBar() {
+export function ApplicationBar(): JSX.Element {
   return (
     <div>
       <AppBar position="sticky">

@@ -1,14 +1,14 @@
-var path = require('path');
+const path = require('path');
 
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  devtool: "source-map",
-  context: __dirname + "/src",
-  entry: './index.js',
+  devtool: 'source-map',
+  context: __dirname + '/src',
+  entry: './index.tsx',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
@@ -17,24 +17,29 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     contentBase: 'build',
+    disableHostCheck: true,
     host: '0.0.0.0',
     port: 3000
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        enforce: 'pre',
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        loaders: ["babel-loader"],
+        loader: PRODUCTION ? ['tslint-loader'] : []
       },
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        loaders: PRODUCTION ? ["eslint-loader"] : [],
+        loaders: ['ts-loader'],
       },
       {
         test: /\.html$/,
-        loaders: ["html-loader"]
+        loaders: ['html-loader']
       },
       {
         test: /\.css$/,
@@ -44,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html")
+      template: path.resolve(__dirname, 'public/index.html')
     }),
     // 本番環境
     ...(
