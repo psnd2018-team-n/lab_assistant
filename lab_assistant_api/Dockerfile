@@ -11,3 +11,5 @@ RUN npm install npm -g
 
 ADD package.json $APP_ROOT
 ADD package-lock.json $APP_ROOT
+
+EXPOSE 3000
