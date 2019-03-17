@@ -57,15 +57,15 @@ VALUES
 ;
 
 -- ユーザユーザ種別
-INSERT INTO user_user_type (
-    user_id,
+INSERT INTO user_user_type ( 
+    user_id, 
     user_type_id
 )
 VALUES
-    (1, 1),
-    (2, 1),
-    (2, 2),
-    (3, 2),
-    (4, 3),
-    (5, 4)
+    (1, 1),
+    (2, 1),
+    (2, 2),
+    (3, 2),
+    (4, 3),
+    (5, 4)
 ;
